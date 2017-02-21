@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Level4BarController : MonoBehaviour,EventTrigger {
+public class Level4BarController : MonoBehaviour {
 
 	private Image image;
 	private Color imageOriginalColor;
