@@ -5,15 +5,19 @@ using UnityEngine.EventSystems;
 
 public class Level5DragController : MonoBehaviour {
 
+	private float xLimit = 500 / 2;
+	private float yLimit = 500 / 2;
+	private Transform parentTransform;
+
+	public void Awake(){
+		parentTransform = transform.parent.transform;
+	}
 
 	public void OnDrag()
-	{
-		Transform parentTrans = transform.parent.transform;
+	{		
 		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		Vector3 mousePositionLocal = parentTrans.InverseTransformPoint (mousePosition);
-		gameObject.transform.localPosition = new Vector3(Mathf.Clamp(mousePositionLocal.x,parentTrans.InverseTransformPoint(-4f,0f,0f).x,parentTrans.InverseTransformPoint(4f,0f,0f).x),
-													Mathf.Clamp(mousePositionLocal.y,parentTrans.InverseTransformPoint(0f,-2.8f,0f).y,parentTrans.InverseTransformPoint(0f,3.2f,0f).y),
-													0f);
+		Vector3 mousePositionLocal = parentTransform.InverseTransformPoint (mousePosition);
+		gameObject.transform.localPosition = new Vector3(Mathf.Clamp(mousePositionLocal.x,-xLimit,xLimit),Mathf.Clamp(mousePositionLocal.y,-yLimit,yLimit),0f);
 	}
 
 }
