@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class Level5DragController : MonoBehaviour {
 
 	private float xLimit = 500 / 2;
-	private float yLimit = 500 / 2;
+	private float yLimit = 450 / 2;
 	private Transform parentTransform;
 
 	public void Awake(){
