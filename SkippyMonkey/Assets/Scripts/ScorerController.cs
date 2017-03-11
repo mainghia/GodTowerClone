@@ -15,7 +15,7 @@ public class ScorerController : MonoBehaviour {
 	
 	private void OnTriggerEnter2D(Collider2D other){
 
-		//TODO increase Score
+		PlayScene.Instance.Score ();
 		PlatformFactory.Instance.PutNewPlatformInPlace();
 		col.enabled = false;
 

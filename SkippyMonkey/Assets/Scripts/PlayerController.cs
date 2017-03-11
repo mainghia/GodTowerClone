@@ -10,10 +10,13 @@ using Lean.Touch;
 public class PlayerController : MonoBehaviour {
 	public float runspeed;
 	public float jumpspeed;
+	public Collider2D colHead;
+
 
 	private Rigidbody2D rgBody;
 	private Collider2D coll;
 	private Animator anim;
+	private bool gameStarted = false;
 
 	private void Awake(){
 		rgBody = GetComponent<Rigidbody2D> ();
@@ -22,11 +25,8 @@ public class PlayerController : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 	}
 
-	private void OnDestroy(){
-		LeanTouch.OnFingerTap -= OnFingerTap;
-	}
-
 	private void OnFingerTap(LeanFinger finger){
+		gameStarted = true;
 		anim.SetBool ("IsGrounded", false);
 		rgBody.velocity = new Vector2 (rgBody.velocity.x, jumpspeed);
 	}
@@ -36,10 +36,32 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Update (){
-		rgBody.velocity = new Vector2 (runspeed, rgBody.velocity.y);
-		if (transform.position.x > 320) {
-			transform.Translate (new Vector2 (-640, 0));
+		if (coll.enabled) {
+			if (gameStarted && rgBody.velocity.x < (runspeed / 2)) {
+				Die ();
+				return;
+			}
+
+			rgBody.velocity = new Vector2 (runspeed, rgBody.velocity.y);
+			if (transform.position.x > 320) {
+				transform.Translate (new Vector2 (-640, 0));
+			}
+		} else {
+			if (transform.position.x < -320) {
+				transform.position =  new Vector2 (transform.position.x + 640, 0);
+			}
 		}
+	}
+
+	public void Die(){
+		coll.enabled = false;
+		colHead.enabled = false;
+		rgBody.velocity = new Vector2 (-150, rgBody.velocity.y);
+		rgBody.freezeRotation = false;
+		rgBody.angularVelocity = 80;
+		LeanTouch.OnFingerTap -= OnFingerTap;
+		PlayScene.Instance.GameOver ();
+		Debug.Log ("Die");
 	}
 
 }

@@ -1,13 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ScorerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameOverScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\SceneScript.cs" Line="9" Column="54" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="36" Column="3" />
-      <File FileName="Assets\Scripts\PlatformFactory.cs" Line="29" Column="8" />
-      <File FileName="Assets\Scripts\CameraController.cs" Line="17" Column="99" />
-      <File FileName="Assets\Scripts\ScorerController.cs" Line="21" Column="3" />
-      <File FileName="Assets\Scripts\PlatformController.cs" Line="7" Column="25" />
+      <File FileName="Assets\Scripts\SceneScript.cs" Line="6" Column="14" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="61" Column="31" />
+      <File FileName="Assets\Scripts\PlayScene.cs" Line="25" Column="39" />
+      <File FileName="Assets\Scripts\PlayerHeadController.cs" Line="10" Column="6" />
+      <File FileName="Assets\Scripts\CameraController.cs" Line="23" Column="3" />
+      <File FileName="Assets\Scripts\GameOverScript.cs" Line="13" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

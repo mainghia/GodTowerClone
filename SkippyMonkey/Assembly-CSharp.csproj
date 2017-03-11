@@ -85,9 +85,12 @@
      <Compile Include="Assets\LeanTouch\Scripts\LeanSnapshot.cs" />
      <Compile Include="Assets\LeanTouch\Scripts\LeanTouch.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\GameOverScript.cs" />
      <Compile Include="Assets\Scripts\PlatformController.cs" />
      <Compile Include="Assets\Scripts\PlatformFactory.cs" />
+     <Compile Include="Assets\Scripts\PlayScene.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\PlayerHeadController.cs" />
      <Compile Include="Assets\Scripts\SceneScript.cs" />
      <Compile Include="Assets\Scripts\ScorerController.cs" />
      <Compile Include="Assets\Scripts\TKLibs\Mathfx.cs" />
