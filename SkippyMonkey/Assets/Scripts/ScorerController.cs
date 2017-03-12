@@ -18,7 +18,6 @@ public class ScorerController : MonoBehaviour {
 		PlayScene.Instance.Score ();
 		PlatformFactory.Instance.PutNewPlatformInPlace();
 		col.enabled = false;
-
 	}
 
 }
