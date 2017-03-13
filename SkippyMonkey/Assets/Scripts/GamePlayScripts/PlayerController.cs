@@ -3,62 +3,76 @@ using System.Collections.Generic;
 using UnityEngine;
 using Lean.Touch;
 
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Animator))]
-
+[RequireComponent(typeof(CustomPhysicCharacterController))]
 public class PlayerController : MonoBehaviour {
 	public float runspeed;
 	public float jumpspeed;
-	public Collider2D colHead;
-
-
-	private Rigidbody2D rgBody;
+	public LayerMask deadCollisionMask;
 	private Collider2D coll;
 	private Animator anim;
 	private bool gameStarted = false;
+	private CustomPhysicCharacterController characterController;
+	private Vector2 currentVelocity;
 
 	private void Awake(){
-		rgBody = GetComponent<Rigidbody2D> ();
+		characterController = GetComponent<CustomPhysicCharacterController>();
 		coll = GetComponent<Collider2D> ();
 		LeanTouch.OnFingerTap += OnFingerTap;
 		anim = GetComponent<Animator> ();
 	}
 
+	private void Start(){
+		currentVelocity = new Vector2 (runspeed*Time.fixedDeltaTime, 0);
+	}
+
 	private void OnFingerTap(LeanFinger finger){
 		gameStarted = true;
+		currentVelocity.y = jumpspeed * Time.fixedDeltaTime;
 		anim.SetBool ("IsGrounded", false);
-		rgBody.velocity = new Vector2 (rgBody.velocity.x, jumpspeed);
+
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision){
-		anim.SetBool ("IsGrounded", true);
-	}
 
-	private void Update (){
-		if (coll.enabled) {
-			if (gameStarted && rgBody.velocity.x < (runspeed / 2)) {
-				Die ();
-				return;
-			}
-
-			rgBody.velocity = new Vector2 (runspeed, rgBody.velocity.y);
-			if (transform.position.x > 320) {
-				transform.Translate (new Vector2 (-640, 0));
-			}
+	private void FixedUpdate(){
+		currentVelocity += Physics2D.gravity * Time.fixedDeltaTime;
+		characterController.Move (currentVelocity);
+		if (characterController.collisionInfo.collideBottom) {
+			currentVelocity.y = 0;
+			anim.SetBool ("IsGrounded", true);
 		} else {
-			if (transform.position.x < -320) {
-				transform.position =  new Vector2 (transform.position.x + 640, 0);
-			}
+			anim.SetBool ("IsGrounded", false);
+		}
+
+		if(characterController.collisionInfo.collideLeft || characterController.collisionInfo.collideRight || characterController.collisionInfo.collideTop){
+			Die();
+		}
+
+		if (transform.position.x > 320) {
+			transform.Translate (new Vector2 (-640, 0));
+		}
+	 else {
+		if (transform.position.x < -320) {
+			transform.position =  new Vector2 (transform.position.x + 640, 0);
 		}
 	}
+}
+
+//	private void Update (){
+//		if (coll.enabled) {
+//			if (gameStarted) { //&& rgBody.velocity.x < (runspeed / 2)) {
+//				Die ();
+//				return;
+//			}		
+//		}
+//	}
 
 	public void Die(){
-		coll.enabled = false;
-		colHead.enabled = false;
-		rgBody.velocity = new Vector2 (-150, rgBody.velocity.y);
-		rgBody.freezeRotation = false;
-		rgBody.angularVelocity = 80;
+		characterController.collisionMask = deadCollisionMask;
+		currentVelocity.x = -runspeed * Time.fixedDeltaTime * 0.5f;
+		currentVelocity.y = runspeed * Time.fixedDeltaTime * 0.5f;
+
 		LeanTouch.OnFingerTap -= OnFingerTap;
 		PlayScene.Instance.GameOver ();
 		Debug.Log ("Die");
