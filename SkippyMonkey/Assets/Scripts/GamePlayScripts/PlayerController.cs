@@ -59,15 +59,6 @@ public class PlayerController : MonoBehaviour {
 	}
 }
 
-//	private void Update (){
-//		if (coll.enabled) {
-//			if (gameStarted) { //&& rgBody.velocity.x < (runspeed / 2)) {
-//				Die ();
-//				return;
-//			}		
-//		}
-//	}
-
 	public void Die(){
 		characterController.collisionMask = deadCollisionMask;
 		currentVelocity.x = -runspeed * Time.fixedDeltaTime * 0.5f;
